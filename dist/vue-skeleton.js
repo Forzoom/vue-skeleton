@@ -4,14 +4,6 @@
     (global.VueSkeleton = factory());
 }(this, (function () { 'use strict';
 
-    // function warn(msg, vm) {
-    //     const trace = vm ? generateComponentTrace(vm) : '';
-    //     if (config.warnHandler) {
-    //         config.warnHandler.call(null, msg, vm, trace);
-    //     } else if (hasConsole && (!config.silent)) {
-    //         console.error(`[Vue warn]: ${msg}${trace}`);
-    //     }
-    // }
     /**
      * code from `src/shared/util.js`
      *
@@ -172,16 +164,9 @@
                 for (var i = 0; i < max; i++) {
                     _loop_1(i);
                 }
-                // this.$options.staticRenderFns = staticRenderFns;
-                // console.log('target14', skeletonCompileResult);
             }
             return mount.call(this, el, hydrating);
         };
-        // Vue.component('SkeletonCol', Col);
-        // Vue.component('SkText', SkText);
-        // 添加新的指令
-        // Vue.directive('skeleton', {
-        // })
     };
 
     return plugin;
