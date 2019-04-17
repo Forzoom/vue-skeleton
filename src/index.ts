@@ -1,5 +1,5 @@
 // import Col from './components/col.vue';
-import SkText from './components/text.vue';
+// import SkText from './components/text.vue';
 import { PluginObject, PluginFunction } from 'vue';
 
 // function warn(msg, vm) {
@@ -179,7 +179,7 @@ const plugin: PluginFunction<null> = (Vue) => {
     };
 
     // Vue.component('SkeletonCol', Col);
-    Vue.component('SkText', SkText);
+    // Vue.component('SkText', SkText);
 
     // 添加新的指令
     // Vue.directive('skeleton', {

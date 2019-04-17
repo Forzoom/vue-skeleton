@@ -1,134 +1,3 @@
-import Vue from 'vue';
-
-// 代表文本
-var script = Vue.extend({
-    name: 'Text',
-});
-
-function normalizeComponent(template, style, script, scopeId, isFunctionalTemplate, moduleIdentifier
-/* server only */
-, shadowMode, createInjector, createInjectorSSR, createInjectorShadow) {
-  if (typeof shadowMode !== 'boolean') {
-    createInjectorSSR = createInjector;
-    createInjector = shadowMode;
-    shadowMode = false;
-  } // Vue.extend constructor export interop.
-
-
-  var options = typeof script === 'function' ? script.options : script; // render functions
-
-  if (template && template.render) {
-    options.render = template.render;
-    options.staticRenderFns = template.staticRenderFns;
-    options._compiled = true; // functional template
-
-    if (isFunctionalTemplate) {
-      options.functional = true;
-    }
-  } // scopedId
-
-
-  if (scopeId) {
-    options._scopeId = scopeId;
-  }
-
-  var hook;
-
-  if (moduleIdentifier) {
-    // server build
-    hook = function hook(context) {
-      // 2.3 injection
-      context = context || // cached call
-      this.$vnode && this.$vnode.ssrContext || // stateful
-      this.parent && this.parent.$vnode && this.parent.$vnode.ssrContext; // functional
-      // 2.2 with runInNewContext: true
-
-      if (!context && typeof __VUE_SSR_CONTEXT__ !== 'undefined') {
-        context = __VUE_SSR_CONTEXT__;
-      } // inject component styles
-
-
-      if (style) {
-        style.call(this, createInjectorSSR(context));
-      } // register component module identifier for async chunk inference
-
-
-      if (context && context._registeredComponents) {
-        context._registeredComponents.add(moduleIdentifier);
-      }
-    }; // used by ssr in case component is cached and beforeCreate
-    // never gets called
-
-
-    options._ssrRegister = hook;
-  } else if (style) {
-    hook = shadowMode ? function () {
-      style.call(this, createInjectorShadow(this.$root.$options.shadowRoot));
-    } : function (context) {
-      style.call(this, createInjector(context));
-    };
-  }
-
-  if (hook) {
-    if (options.functional) {
-      // register for functional component in vue file
-      var originalRender = options.render;
-
-      options.render = function renderWithStyleInjection(h, context) {
-        hook.call(context);
-        return originalRender(h, context);
-      };
-    } else {
-      // inject component registration as beforeCreate hook
-      var existing = options.beforeCreate;
-      options.beforeCreate = existing ? [].concat(existing, hook) : [hook];
-    }
-  }
-
-  return script;
-}
-
-var normalizeComponent_1 = normalizeComponent;
-
-/* script */
-const __vue_script__ = script;
-
-/* template */
-var __vue_render__ = function() {
-  var _vm = this;
-  var _h = _vm.$createElement;
-  var _c = _vm._self._c || _h;
-  return _c("div")
-};
-var __vue_staticRenderFns__ = [];
-__vue_render__._withStripped = true;
-
-  /* style */
-  const __vue_inject_styles__ = undefined;
-  /* scoped */
-  const __vue_scope_id__ = undefined;
-  /* module identifier */
-  const __vue_module_identifier__ = undefined;
-  /* functional template */
-  const __vue_is_functional_template__ = false;
-  /* style inject */
-  
-  /* style inject SSR */
-  
-
-  
-  var SkText = normalizeComponent_1(
-    { render: __vue_render__, staticRenderFns: __vue_staticRenderFns__ },
-    __vue_inject_styles__,
-    __vue_script__,
-    __vue_scope_id__,
-    __vue_is_functional_template__,
-    __vue_module_identifier__,
-    undefined,
-    undefined
-  );
-
-// import Col from './components/col.vue';
 // function warn(msg, vm) {
 //     const trace = vm ? generateComponentTrace(vm) : '';
 //     if (config.warnHandler) {
@@ -192,7 +61,7 @@ function getOuterHTML(el) {
         return container.innerHTML;
     }
 }
-var plugin = function (Vue$$1) {
+var plugin = function (Vue) {
     // TODO 不好判断这里的this是什么
     // @ts-ignore
     if (plugin.installed) {
@@ -200,7 +69,7 @@ var plugin = function (Vue$$1) {
     }
     // @ts-ignore
     plugin.installed = true;
-    Vue$$1.mixin({
+    Vue.mixin({
         mixins: [
             {
                 props: {
@@ -227,8 +96,8 @@ var plugin = function (Vue$$1) {
             },
         ],
     });
-    var mount = Vue$$1.prototype.$mount;
-    Vue$$1.prototype.$mount = function (el, hydrating) {
+    var mount = Vue.prototype.$mount;
+    Vue.prototype.$mount = function (el, hydrating) {
         el = el && query(el);
         // const vm = this;
         // 尝试替换原本mount函数逻辑，必须要完成options.render函数
@@ -260,12 +129,12 @@ var plugin = function (Vue$$1) {
                     template = getOuterHTML(el);
                 }
                 if (template) {
-                    var compileResult = Vue$$1.compile(template);
+                    var compileResult = Vue.compile(template);
                     render_1 = compileResult.render;
                     staticRenderFns_1 = compileResult.staticRenderFns;
                 }
             }
-            var skeletonCompileResult = Vue$$1.compile(skeletonTemplate);
+            var skeletonCompileResult = Vue.compile(skeletonTemplate);
             var skeletonRender_1 = skeletonCompileResult.render;
             var skeletonStaticRenderFns_1 = skeletonCompileResult.staticRenderFns;
             this.$options.render = function () {
@@ -303,7 +172,7 @@ var plugin = function (Vue$$1) {
         return mount.call(this, el, hydrating);
     };
     // Vue.component('SkeletonCol', Col);
-    Vue$$1.component('SkText', SkText);
+    // Vue.component('SkText', SkText);
     // 添加新的指令
     // Vue.directive('skeleton', {
     // })
