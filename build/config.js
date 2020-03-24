@@ -1,6 +1,8 @@
-const typescript = require('rollup-plugin-typescript');
-const vue = require('rollup-plugin-vue');
+const resolve = require('rollup-plugin-node-resolve');
+const babel = require('rollup-plugin-babel');
 const commonjs = require('rollup-plugin-commonjs');
+
+const extensions = [ '.ts', '.js' ];
 
 module.exports = exports = [
     {
@@ -11,10 +13,9 @@ module.exports = exports = [
         },
         plugins: [
             commonjs(),
-            vue({
-                css: './dist/vue-skeleton.css',
+            babel({
+                extensions,
             }),
-            typescript(),
         ],
     },
     {
@@ -25,10 +26,9 @@ module.exports = exports = [
         },
         plugins: [
             commonjs(),
-            vue({
-                css: './dist/vue-skeleton.css',
+            babel({
+                extensions,
             }),
-            typescript(),
         ],
     },
     {
@@ -40,10 +40,9 @@ module.exports = exports = [
         },
         plugins: [
             commonjs(),
-            vue({
-                css: './dist/vue-skeleton.css',
+            babel({
+                extensions,
             }),
-            typescript(),
         ],
     },
 ];

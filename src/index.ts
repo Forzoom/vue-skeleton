@@ -1,5 +1,15 @@
 import { PluginFunction } from 'vue';
 
+// function warn(msg, vm) {
+//     const trace = vm ? generateComponentTrace(vm) : '';
+
+//     if (config.warnHandler) {
+//         config.warnHandler.call(null, msg, vm, trace);
+//     } else if (hasConsole && (!config.silent)) {
+//         console.error(`[Vue warn]: ${msg}${trace}`);
+//     }
+// }
+
 /**
  * code from `src/shared/util.js`
  *
@@ -57,7 +67,7 @@ function getOuterHTML(el: any) {
     }
 }
 
-const plugin: PluginFunction<null> = (Vue) => {
+export const plugin: PluginFunction<null> = (Vue) => {
     // TODO 不好判断这里的this是什么
     // @ts-ignore
     if (plugin.installed) {
@@ -160,9 +170,8 @@ const plugin: PluginFunction<null> = (Vue) => {
                     }
                 });
             }
+            // this.$options.staticRenderFns = staticRenderFns;
         }
         return mount.call(this, el, hydrating);
     };
 };
-
-export default plugin;
