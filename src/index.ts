@@ -175,3 +175,16 @@ export const plugin: PluginFunction<null> = (Vue) => {
         return mount.call(this, el, hydrating);
     };
 };
+
+export function loader(source: string, map: any) {
+    // @ts-ignore
+    this.callback(
+        null,
+        `export default function (Component) {
+            Component.options.skeletonTemplate = ${
+            JSON.stringify(source)
+            }
+        }`,
+        map
+    )
+}

@@ -204,5 +204,9 @@ var plugin = function plugin(Vue) {
     return mount.call(this, el, hydrating);
   };
 };
+function loader(source, map) {
+  // @ts-ignore
+  this.callback(null, "export default function (Component) {\n            Component.options.skeletonTemplate = ".concat(JSON.stringify(source), "\n        }"), map);
+}
 
-export { plugin };
+export { plugin, loader };
